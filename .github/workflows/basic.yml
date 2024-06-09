@@ -30,9 +30,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check bend Version
+        run: bend --version
+
+      - name: Sum using Rust interpreter (Sequential)
+        shell: nu {0}
         run: |
-          bend --version
+          print $'Rust version: (ansi g)(rustc --version)(ansi reset)'
           bend run examples/sequential_sum.bend -s
+
+      - name: Sum using C interpreter (Sequential)
+        shell: nu {0}
+        if: matrix.os != 'windows-latest'
+        run: |
+          print $'Gcc version: (ansi g)(gcc --version)(ansi reset)'
           bend run-c examples/sequential_sum.bend -s
-          bend run-cu examples/sequential_sum.bend -s
 

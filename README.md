@@ -22,7 +22,7 @@ steps:
 
   - name: Check Bend Version
     run: |
-        bend version
+        bend --version
 
 ```
 

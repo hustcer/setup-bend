@@ -21,7 +21,7 @@ steps:
 
   - name: Check Bend Version
     run: |
-        bend version
+        bend --version
 ```
 
 或者也可以参考下本仓库的 [test.yaml](https://github.com/hustcer/setup-bend/blob/main/.github/workflows/test.yml) 例子。
