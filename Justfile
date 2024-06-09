@@ -21,7 +21,7 @@ set dotenv-load := true
 set positional-arguments := true
 
 # Just commands aliases
-alias f := fetch
+alias r := release
 
 # Use `just --evaluate` to show env vars
 
