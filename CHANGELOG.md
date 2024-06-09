@@ -16,8 +16,3 @@ All notable changes to this project will be documented in this file.
 
 - Update common.nu
 - Update basic test workflow
-- Update basic test workflow
-
-# Changelog
-All notable changes to this project will be documented in this file.
-
