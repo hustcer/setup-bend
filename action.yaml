@@ -5,6 +5,7 @@
 #   - https://docs.github.com/cn/actions/creating-actions/about-custom-actions
 #   - https://docs.github.com/cn/actions/creating-actions/metadata-syntax-for-github-actions
 #   - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+#   - https://github.com/actions/runner-images
 
 name: 'Setup Bend'
 author: 'hustcer'

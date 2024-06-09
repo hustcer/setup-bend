@@ -15,6 +15,7 @@ on:
 jobs:
   setup-bend:
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
@@ -31,4 +32,7 @@ jobs:
       - name: Check bend Version
         run: |
           bend --version
+          bend run examples/sequential_sum.bend -s
+          bend run-c examples/sequential_sum.bend -s
+          bend run-cu examples/sequential_sum.bend -s
 
