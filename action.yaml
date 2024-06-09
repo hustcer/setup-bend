@@ -18,7 +18,7 @@ inputs:
   action:
     required: false
     default: 'nothing'
-    description: 'Just a Test input, no input required currently.'
+    description: 'Just a Test input, no input required currently...'
 
 runs:
   using: 'composite'

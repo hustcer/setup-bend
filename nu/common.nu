@@ -1,12 +1,62 @@
 #!/usr/bin/env nu
 # Author: hustcer
-# Created: 2024/06/09 18:36:56
+# Created: 2021/10/10 07:36:56
 # Usage:
-#   use `source` command to load it
+#   use source command to load it
+
+# Global date format
+# let _DATE_FMT = '%Y.%m.%d'
+# let _TIME_FMT = '%Y-%m-%d %H:%M:%S'
+# let _UPGRADE_TAG = '$-FORCE-UPGRADE-$'
+
+# All available exit codes:
+#   0: Success
+#   1: Outdated
+#   2: Missing binary
+#   3: Missing dependency
+#   5: Condition not satisfied
+#   6: Server error
+#   7: Invalid parameter
+#   8: Auth failed
+
+export const _DATE_FMT  = '%Y.%m.%d'
+export const _TIME_FMT =  '%Y/%m/%d %H:%M:%S'
+
+# Commonly used exit codes
+export const ECODE = {
+  SUCCESS: 0,
+  OUTDATED: 1,
+  MISSING_BINARY: 2,
+  MISSING_DEPENDENCY: 3,
+  CONDITION_NOT_SATISFIED: 5,
+  SERVER_ERROR: 6,
+  INVALID_PARAMETER: 7,
+  AUTH_FAILED: 8,
+}
+
+export-env {
+  # FIXME: 去除前导空格背景色
+  $env.config.color_config.leading_trailing_space_bg = { attr: n }
+}
+
+# the cute and friendly mascot of Nushell :)
+export def ellie [] {
+  let ellie = [
+    "     __  ,",
+    " .--()°'.'",
+    "'|, . ,'",
+    " !_-(_\\",
+  ]
+
+  $ellie | str join "\n" | $"(ansi green)($in)(ansi reset)"
+}
+
+# Termix.toml config file path
+export def get-termix-conf [] { ([$env.TERMIX_DIR 'termix.toml'] | path join) }
 
 # If current host is Windows
 export def windows? [] {
-  # Windows / Darwin / Linux
+  # Windows / Darwin
   (sys host | get name) == 'Windows'
 }
 
@@ -16,11 +66,13 @@ export def is-installed [ app: string ] {
 }
 
 # Get the specified env key's value or ''
-export def 'get-env' [
-  key: string       # The key to get it's env value
-  default?: string  # The default value for an empty env
+export def get-env [
+  key: string,       # The key to get it's env value
+  default?: string,  # The default value for an empty env
 ] {
   $env | get -i $key | default $default
+  # let hasEnv = (env | any { |it| $it.name == $key })
+  # if $hasEnv { $env | get $key } else { $default }
 }
 
 # Check if a git repo has the specified ref: could be a branch or tag, etc.
@@ -73,15 +125,15 @@ export def git-check [
   cd $dest
   let isGitInstalled = (which git | length) > 0
   if (not $isGitInstalled) {
-    echo $'You should (ansi r)INSTALL git(ansi reset) first to run this command, bye...'
-    exit 2
+    print $'You should (ansi r)INSTALL git(ansi reset) first to run this command, bye...'
+    exit $ECODE.MISSING_BINARY
   }
   # If we don't need repo check just quit now
   if ($check_repo != 0) {
     let checkRepo = (do -i { git rev-parse --is-inside-work-tree } | complete)
     if not ($checkRepo.stdout =~ 'true') {
-      echo $'Current directory is (ansi r)NOT(ansi reset) a git repo, bye...(char nl)'
-      exit 5
+      print $'Current directory is (ansi r)NOT(ansi reset) a git repo, bye...(char nl)'
+      exit $ECODE.CONDITION_NOT_SATISFIED
     }
   }
 }
@@ -99,17 +151,36 @@ export def log [
   name: string,
   var: any,
 ] {
-  echo $'(ansi g)(build-line 18)> Debug Begin: ($name) <(build-line 18)(ansi reset)'
-  echo $var
-  echo $'(ansi g)(build-line 20)>  Debug End <(build-line 20)(char nl)(ansi reset)'
+  print $'(ansi g)(build-line 18)> Debug Begin: ($name) <(build-line 18)(ansi reset)'
+  print $var
+  print $'(ansi g)(build-line 20)>  Debug End <(build-line 20)(char nl)(ansi reset)'
 }
 
 export def hr-line [
   width?: int = 90,
-  --color(-c): string = 'g',
   --blank-line(-b),
   --with-arrow(-a),
+  --color(-c): string = 'g',
 ] {
-  echo $'(ansi $color)(build-line $width)(if $with_arrow {'>'})(ansi reset)'
-  if $blank_line { char nl }
+  print $'(ansi $color)(build-line $width)(if $with_arrow {'>'})(ansi reset)'
+  if $blank_line { print -n (char nl) }
+}
+
+# parallel { print "Oh" } { print "Ah" } { print "Eeh" }
+export def parallel [...closures] {
+  $closures | par-each {
+    |c| do $c
+  }
+}
+
+# Display a progress bar with specified length
+export def progress [
+  count: int,               # Total tick count of the progress bar
+  interval: float = 1.0,    # The interval between each tick
+  --char(-c): string = '█', # The char to display for each tick
+] {
+  mut x = 0
+  let duration = $'($interval)sec' | into duration
+  # Available chars: █ ▓ ▒ ░ = - ~ *
+  while $x < $count { print -n $char; $x = $x + 1; sleep $duration }
 }

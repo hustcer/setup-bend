@@ -13,15 +13,15 @@ export-env {
 }
 
 export def 'setup bend' [] {
-  print "Setting up Bend environment..."
-  print $'Gcc version: (gcc --version)'
-  print $'Cargo version: (cargo --version)'
-  print 'Installing Hvm2...'
+  print "Setting up Bend environment..."; hr-line
+  print $'Gcc version: (ansi g)(gcc --version)(ansi reset)'
+  print $'Cargo version: (ansi g)(cargo --version)(ansi reset)'
+  print 'Installing Hvm2...'; hr-line
   cargo install hvm
-  print $'Hvm version: (hvm --version)'
-  print 'Installing Bend...'
+  print $'Hvm version: (ansi g)(hvm --version)(ansi reset)'
+  print 'Installing Bend...'; hr-line
   cargo install bend-lang
-  print $'Bend version: (bend --version)'
+  print $'Bend version: (ansi g)(bend --version)(ansi reset)'
 }
 
 alias main = setup bend
