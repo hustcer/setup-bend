@@ -29,9 +29,26 @@ runs:
       with:
         version: '0.94.2'
 
+    - name: Get Cache Suffix
+      id: cache-suffix
+      shell: nu {0}
+      run: |
+        use ${{ github.action_path }}/nu/bend.nu *
+        gen-cache-key
+
+    - uses: actions/cache@v4
+      id: cache
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          ~/.cargo/bin/hvm*
+          ~/.cargo/bin/bend*
+        key: ${{ runner.os }}-check-${{ steps.cache-suffix.outputs.suffix }}
+
     - name: Setup Bend
       shell: nu {0}
       run: |
         use ${{ github.action_path }}/nu/bend.nu *
-        setup bend
+        setup bend ${{steps.cache.outputs.cache-hit}}
 
