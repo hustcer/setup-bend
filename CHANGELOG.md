@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2] - 2024-09-16
 
+### Miscellaneous Tasks
+
+- Adapt to Nu v0.97.2
+
 ### Deps
 
 - Upgrade actions/checkout and use latest version of Nu for action
