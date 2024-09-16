@@ -51,9 +51,6 @@ export def ellie [] {
   $ellie | str join "\n" | $"(ansi green)($in)(ansi reset)"
 }
 
-# Termix.toml config file path
-export def get-termix-conf [] { ([$env.TERMIX_DIR 'termix.toml'] | path join) }
-
 # If current host is Windows
 export def windows? [] {
   # Windows / Darwin
@@ -71,8 +68,6 @@ export def get-env [
   default?: string,  # The default value for an empty env
 ] {
   $env | get -i $key | default $default
-  # let hasEnv = (env | any { |it| $it.name == $key })
-  # if $hasEnv { $env | get $key } else { $default }
 }
 
 # Check if a git repo has the specified ref: could be a branch or tag, etc.
