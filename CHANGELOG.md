@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2] - 2024-09-16
+
+### Deps
+
+- Upgrade actions/checkout and use latest version of Nu for action
+- Update Nu to v0.97.1 as the shell engine
+
 ## [1.1] - 2024-06-10
 
 ### Features
