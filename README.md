@@ -15,7 +15,7 @@ It's quite simple to use `hustcer/setup-bend`, just follow the example below:
 ```yaml
 steps:
   - name: Checkout
-    uses: actions/checkout@v4.1.7
+    uses: actions/checkout@v4
 
   - name: Setup Bend
     uses: hustcer/setup-bend@v1
