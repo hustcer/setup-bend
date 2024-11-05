@@ -19,12 +19,12 @@ export def 'setup bend' [cacheHit: bool = false] {
   print $'Cargo version: (ansi g)(cargo --version)(ansi reset)'
   if $cacheHit != true {
     print 'Installing Hvm2...'; hr-line
-    cargo install hvm
+    cargo install hvm --force
   }
   print $'Hvm version: (ansi g)(hvm --version)(ansi reset)'
   if $cacheHit != true {
     print 'Installing Bend...'; hr-line
-    cargo install bend-lang
+    cargo install bend-lang --force
   }
   print $'Bend version: (ansi g)(bend --version)(ansi reset)'
 }
