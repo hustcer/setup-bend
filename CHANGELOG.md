@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3] - 2024-11-05
+
+### Bug Fixes
+
+- Fix cargo install for `hvm` and `bend-lang`
+
+### Deps
+
+- Update `Nu` to v0.99.1 as the shell engine
+
 ## [1.2] - 2024-09-16
 
 ### Miscellaneous Tasks
