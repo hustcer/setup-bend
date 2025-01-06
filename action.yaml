@@ -27,7 +27,7 @@ runs:
     - name: Setup Nu
       uses: hustcer/setup-nu@v3
       with:
-        version: 0.99.1
+        version: 0.101.0
 
     - name: Get Cache Suffix
       id: cache-suffix
