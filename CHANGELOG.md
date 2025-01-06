@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5] - 2025-01-06
+
+### Bug Fixes
+
+- Fix basic workflow for Windows
+
+### Features
+
+- Add cspell checking hook (#9)
+
+### Deps
+
+- Upgrade Nu to v0.101 (#11)
+
 ## [1.3] - 2024-11-05
 
 ### Bug Fixes
