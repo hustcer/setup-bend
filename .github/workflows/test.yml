@@ -5,6 +5,7 @@
 
 name: Setup-Bend@Release
 on:
+  workflow_dispatch:
   push:
     branches:
       - main

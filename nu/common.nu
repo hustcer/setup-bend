@@ -67,7 +67,7 @@ export def get-env [
   key: string,       # The key to get it's env value
   default?: string,  # The default value for an empty env
 ] {
-  $env | get -i $key | default $default
+  $env | get -o $key | default $default
 }
 
 # Check if a git repo has the specified ref: could be a branch or tag, etc.
@@ -93,8 +93,8 @@ export def compare-ver [
   let v1 = ($source | split row '.' | each {|it| ($it | parse -r '(?P<v>\d+)' | get v | get 0 )})
   let v2 = ($dest | split row '.' | each {|it| ($it | parse -r '(?P<v>\d+)' | get v | get 0 )})
   for $v in ($v1 | enumerate) {
-    let c1 = ($v1 | get -i $v.index | default 0 | into int)
-    let c2 = ($v2 | get -i $v.index | default 0 | into int)
+    let c1 = ($v1 | get -o $v.index | default 0 | into int)
+    let c2 = ($v2 | get -o $v.index | default 0 | into int)
     if $c1 > $c2 {
       return 1
     } else if ($c1 < $c2) {
