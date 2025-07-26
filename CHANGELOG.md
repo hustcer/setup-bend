@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6] - 2025-07-26
+
+### Bug Fixes
+
+- Fix getting Nu binary path for Nushell 0.106
+- Upgrade Nushell to v0.106
+
 ## [1.5] - 2025-01-06
 
 ### Bug Fixes
